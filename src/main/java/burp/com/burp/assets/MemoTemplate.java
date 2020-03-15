@@ -9,19 +9,19 @@ import java.util.stream.Stream;
 public class MemoTemplate {
     private static String memorandom_format = "[Format]\n" +
     "[Target URL]: " + "\n" + 
-    "@@pentest_target@@" + "\n\n" + 
+    "§§pentest_target§§" + "\n\n" + 
     "[Referer]: " + "\n" + 
-    "@@referred_from@@"  + "\n\n" + 
+    "§§referred_from§§"  + "\n\n" + 
     "[Method]: "  + "\n" + 
-    "@@method@@" + "\n\n" + 
+    "§§method§§" + "\n\n" + 
     "[Cookie]: " + "\n" + 
-    "@@cookies@@" + "\n\n" + 
+    "§§cookies§§" + "\n\n" + 
     "[GET Parametor]: " + "\n" + 
-    "@@get_params@@" + "\n\n" + 
+    "§§get_params§§" + "\n\n" + 
     "[POST Parametor]: " + "\n" + 
-    "@@body_params@@" + "\n\n" + 
+    "§§body_params§§" + "\n\n" + 
     "[Total Parametor(without Cookies)]: " + "\n" + 
-    "@@params_count@@";
+    "§§params_count§§";
 
     /**
      * Read 'template.txt', if the file is exist.

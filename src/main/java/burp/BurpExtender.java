@@ -12,12 +12,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import burp.com.burp.ui.ExtentionTab;
+
 /* 
 interface is package one of jar
 It can pack full interfaces then `mvn install`
  */
-
-public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab { // IContextMenuFactoryを実装する
+public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab {
 
     public static IBurpExtenderCallbacks iBurpExtenderCallbacks;
     private static IExtensionHelpers helpers;

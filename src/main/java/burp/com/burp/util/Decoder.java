@@ -6,12 +6,9 @@ import java.net.URLDecoder;
 import burp.com.org.apache.commons.codec.DecoderException;
 import burp.com.org.apache.commons.codec.net.URLCodec;
 
-import burp.com.burp.util.*;
-
-
 public class Decoder {
 
-    public static String decode(String str, Byte decodeSet){
+    public static String decode(String str, Byte decodeSet) throws UnsupportedEncodingException, DecoderException {
         switch(decodeSet){
             case 1:
                 return Decoder.decode(str, "UTF-8");
@@ -26,10 +23,11 @@ public class Decoder {
     
     /**
      * @param str 
-     * @param enc
-     * ->"UTF-8","Shift-JIS","EUC-JP"
+     * @param enc <UTF-8|Shift-JIS|EUC-JP>
+     * @throws UnsupportedEncodingException
+     * 
      */
-    public static String decode(String str, String enc){
+    public static String decode(String str, String enc) throws DecoderException, UnsupportedEncodingException{
         
         RegexParser regexParser = new RegexParser(str);
     
@@ -38,23 +36,28 @@ public class Decoder {
             return str;
         };
         String decodedString = "";
+
+        URLCodec codec = new URLCodec(enc);
         switch(enc){
             case "UTF-8":
             try {
                 decodedString = URLDecoder.decode(str, enc);
+            //} catch (UnsupportedEncodingException e1) {
             } catch (UnsupportedEncodingException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
+                decodedString = str;
             }
                 break;
 
             case "Shift-JIS":
             case "EUC-JP":
                 // INFO: Shift-JIS & EUC-JP strings can't decode with java.net.URLDecoder.
+                
                 try{ 
-                    URLCodec codec = new URLCodec(enc);
-                    decodedString = codec.decode(str, enc);
+                    decodedString = codec.decode(str);
                 } catch (Exception e) {
+                    String exceptionMessage = e.getClass().getName() + ": " + e.getMessage();
+                    //decodedString = exceptionMessage + str;
                     decodedString = str;
                 }
                 break;
@@ -86,7 +89,7 @@ public class Decoder {
      * @param str raw text
      * @throws UnsupportedEncodingException
      */
-    public static String decodeSJIS(String str) throws UnsupportedEncodingException {
+    public static String decodeSJIS(String str) throws UnsupportedEncodingException, DecoderException {
         return decode(str, "Shift-JIS");
     }
     /**
@@ -95,7 +98,7 @@ public class Decoder {
      * @param str raw text
      * @throws UnsupportedEncodingException
      */
-    public static String decodeEUC(String str) throws UnsupportedEncodingException {
+    public static String decodeEUC(String str) throws UnsupportedEncodingException, DecoderException {
         return decode(str, "EUC-JP");
     }
     
