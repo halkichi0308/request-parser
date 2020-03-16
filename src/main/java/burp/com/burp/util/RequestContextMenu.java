@@ -54,7 +54,7 @@ public class RequestContextMenu implements MouseListener {
                 stdout.println("[Success]: Parsed 1 request, then pasted to Clipboard.\n");
                 Pbcopy.pbcopy(requestParser.getParsedRequest());                
             }catch(Exception e){
-                stdout.println("Error]: Unexpected Request.\n");
+                stdout.println("[Error]: Unexpected Request.\n");
                 stderr.println(e);
                 Pbcopy.pbcopy(requestParser.getParsedRequest());
             }

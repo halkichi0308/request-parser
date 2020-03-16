@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import burp.com.burp.util.Decoder;
 import burp.com.burp.util.RegexParser;
+import burp.com.org.apache.commons.codec.DecoderException;
 
 public class RequestResponseUtils {
 
@@ -296,9 +297,11 @@ public class RequestResponseUtils {
         for(IParameter parametor : parametors){
             if(parametor.getName().length() > 0){
                 // TODO witch charset selected.
-                _getParametorName = Decoder.decode(parametor.getName(), this.decodeSet);
-                _getParametorValue = Decoder.decode(parametor.getValue(), this.decodeSet);
-                iterateString += param_type + "\t" + _getParametorName + "\t" + _getParametorValue + "\n";
+                try{
+                    _getParametorName = Decoder.decode(parametor.getName(), this.decodeSet);
+                    _getParametorValue = Decoder.decode(parametor.getValue(), this.decodeSet);
+                    iterateString += param_type + "\t" + _getParametorName + "\t" + _getParametorValue + "\n";
+                }catch(Exception e){}
             }
         };
         return iterateString;

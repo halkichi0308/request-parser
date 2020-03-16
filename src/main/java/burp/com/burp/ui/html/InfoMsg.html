@@ -4,30 +4,30 @@
     <h2>Request Parser</h2> 
     <p>Request Parser is useful Burp Extender. The Extender is able to use with fewer resources, Because It do with Burp API(Burp Interface) and made from Java.</p><p>The Extender makes you soft.</p>
     <h2>Usage:</h2> 
-    <p>Enter the Format Text that you want replace from request in TextArea on left Panel.</p> 
+    <p>Enter the Format Text that you want to replace from request in TextArea on left Panel.</p> 
     <p>and then Click on any request and select [Request Parser] from Context Menu.</p><p>Burp paste the parsed request to your clipboard.</p>
     <table border=1>
       <tr>
         <td>
-          <input type='text'value='@@raw_req@@'>
+          <input type='text'value='§§raw_req§§'>
         </td>
         <td>Raw Request</td>
       </tr>
       <tr>
         <td>
-          <input type='text'value='@@pentest_target@@'>
+          <input type='text'value='§§pentest_target§§'>
         </td>
         <td>Target url (query parametors excluded)</td>
       </tr>
       <tr>
         <td>
-          <input type='text'value='@@referred_from@@'>
+          <input type='text'value='§§referred_from§§'>
         </td>
         <td>Referer (query parametors excluded)</td>
       </tr>
       <tr>
         <td>
-          <input type='text'value='@@method@@'>
+          <input type='text'value='§§method§§'>
         </td>
         <td>
           HTTP Request method
@@ -35,7 +35,7 @@
       </tr>
       <tr>
         <td>
-          <input type='text'value='@@cookies@@'>
+          <input type='text'value='§§cookies§§'>
         </td>
         <td>
           String: cookie_name cookie_value
@@ -43,18 +43,18 @@
       </tr>
       <tr>
         <td>
-          <input type='text'value='@@get_params@@'></td>
+          <input type='text'value='§§get_params§§'></td>
         <td>String: [url]name [url]value</td>
       </tr>
       <tr>
         <td>
-          <input type='text'value='@@body_params@@'>
+          <input type='text'value='§§body_params§§'>
         </td>
         <td>String: [body]name [body]value</td>
       </tr>
       <tr>
         <td>
-          <input type='text'value='@@params_count@@'>
+          <input type='text'value='§§params_count§§'>
         </td>
         <td>
           Count all parametors exclude cookie
