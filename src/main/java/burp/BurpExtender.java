@@ -41,7 +41,7 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab {
             this.iBurpExtenderCallbacks.addSuiteTab(BurpExtender.this);
         });
 
-        // In order to regist Context Menu.
+        // To register Context Menu.
         callbacks.registerContextMenuFactory(this);
     }
 
@@ -61,7 +61,7 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory, ITab {
     }
 
     /**
-     * コンテキストメニューの作成
+     * To crate context menu
      *
      * @param iContextMenuInvocation
      * @return

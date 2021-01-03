@@ -4,6 +4,11 @@ import java.io.UnsupportedEncodingException;
 import burp.com.org.apache.commons.codec.DecoderException;
 import burp.com.org.apache.commons.codec.net.URLCodec;
 
+import java.util.Date;
+import java.util.Calendar;
+
+
+
 /**
  * Sandbox during development.
  * You can use IDE's "run".
@@ -15,6 +20,12 @@ public class App {
     System.out.println(json.toString(4));
     */
     // URLCodec
+    Date date = new Date();
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(2021, 2, 1);
+    Date date2 = calendar.getTime();
+    System.out.println(date.before(date2));
+
     
     String enc = "Shift-JIS";
 
