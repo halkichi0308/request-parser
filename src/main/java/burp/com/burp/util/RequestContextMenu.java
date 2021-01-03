@@ -13,6 +13,11 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.Calendar;
+import java.util.Date;
+
+
+
 
 public class RequestContextMenu implements MouseListener {
 
@@ -41,10 +46,20 @@ public class RequestContextMenu implements MouseListener {
         for (IHttpRequestResponse iHttpRequestResponse : this.iHttpRequestResponseArray) {
             RequestParser requestParser = null;
             
-                String memoFormatText = this.extentionTab.getFormatMemoTextArea();
-                // TODO In fact, I don't want to send arg "decodeset".
-                byte decodeSet = this.extentionTab.decodeChecked();
-                
+            String memoFormatText = this.extentionTab.getFormatMemoTextArea();
+            // [TODO] To declare argument "decodeset" is undesirable.
+            byte decodeSet = this.extentionTab.decodeChecked();
+            
+            Date date = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(2021, 8, 1);
+            Date useLimitDate = calendar.getTime();
+
+            if(date.before(useLimitDate)){
+                stdout.println("[Notice]: You should update. Let Producer know this.\n");
+                Pbcopy.pbcopy("[Notice]: You should update. Let Producer know this.\n");
+            }
+
             try{       
                 requestParser = new RequestParser(  iHttpRequestResponse,
                                                     requestResponseUtils,
