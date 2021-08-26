@@ -7,34 +7,41 @@ public class MemoFormatter {
   HashMap<String, String> req_extracted_map;
 
   public MemoFormatter(final String request, String memorandom_format) {
-	  this.req_extracted_map = new HashMap<String, String>(){
-      {put("raw_req", request);}
+    this.req_extracted_map = new HashMap<String, String>() {
+      {
+        put("raw_req", request);
+      }
     };
     this.single_memorandom = memorandom_format;
     this.single_memorandom = memorandom_format.replace("§§raw_req§§", req_extracted_map.get("raw_req"));
   }
 
-  public void appendReferer(String url){
+  public void appendReferer(String url) {
     this.single_memorandom = this.single_memorandom.replace("§§referred_from§§", url);
   }
-  public void appendUrl(String url){
-    this.single_memorandom = this.single_memorandom.replace("§§pentest_target§§", url);
+
+  public void appendUrl(String target) {
+    this.single_memorandom = this.single_memorandom.replace("§§pentest_target§§", target);
   }
-  public void appendMethod(String method){
+
+  public void appendMethod(String method) {
     this.single_memorandom = this.single_memorandom.replace("§§method§§", method);
   }
-  public void appendQueries(String query){
+
+  public void appendQueries(String query) {
     this.single_memorandom = this.single_memorandom.replace("§§get_params§§", query);
   }
-  public void appendBodies(String body){
+
+  public void appendBodies(String body) {
     this.single_memorandom = this.single_memorandom.replace("§§body_params§§", body);
   }
-  public void appendCookies(String cookies){
+
+  public void appendCookies(String cookies) {
     this.single_memorandom = this.single_memorandom.replace("§§cookies§§", cookies);
   }
-  public void appendParamsCount(int paramsCount){
+
+  public void appendParamsCount(int paramsCount) {
     this.single_memorandom = this.single_memorandom.replace("§§params_count§§", paramsCount + "");
   }
-  
-  
+
 }

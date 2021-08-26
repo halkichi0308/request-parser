@@ -1,4 +1,5 @@
 # request-parser
+Request parser is very nice burp extender. This extender helps all pentester when getting evidence. Request parser can dump evidence easy to use request.
 
 ## Prerequisites 
 * [Maven](https://maven.apache.org/)
@@ -26,7 +27,19 @@ Now `request-parser` should be available.
 │   │           └── com
 │   │               ├── App.java  # Not required to build Maven, Used to sandbox.
 │   │               ├── burp      # request parser source codes.
-│   │               └── org       # The burp tool needs to arrange this folder to use apache libraries.
+│   │               └── org       # Don't move and any change. The burp tool needs to arrange this folder to use apache libraries.
 │   └── test
 └── target     # This folder is the maven default output folder.
 ```
+
+## Burp Extender Usage
+It's easy way to use request parser by following these steps.
+[Extender] -> [Extentions] -> [Add] -> [Extention Details]
+
+
+And [Request Paeser] tab will appear in the burp tab line. 
+
+## Debugging
+There are two ways to debug method. for now.
+1. Using IDE.
+2. Using Burp extender output console.
