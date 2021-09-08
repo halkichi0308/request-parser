@@ -7,7 +7,6 @@ import burp.IRequestInfo;
 import burp.IResponseInfo;
 import burp.IParameter;
 
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -16,7 +15,9 @@ import org.json.JSONObject;
 
 import burp.com.burp.util.Decoder;
 import burp.com.burp.util.RegexParser;
+import burp.com.burp.type.ParamType;
 import burp.com.org.apache.commons.codec.DecoderException;
+import java.io.PrintWriter;
 
 public class RequestResponseUtils {
 
@@ -177,7 +178,7 @@ public class RequestResponseUtils {
         StringBuilder stringBuilder = new StringBuilder();
         String requestString = this.showRequest(iHttpRequestResponse);
         RegexParser parseRequest = new RegexParser(requestString);
-        stringBuilder.append(parseRequest.matcher("^Referer.\s(http.:.*$)"));
+        stringBuilder.append(parseRequest.matcher("^Referer.\\s(http.:.*$)"));
         return stringBuilder.toString();
     }
 
@@ -303,11 +304,8 @@ public class RequestResponseUtils {
     }
 
     private String iterateIParameter(List<IParameter> parametors, byte type) {
+        final ParamType paramType = ParamType.typeOf(Byte.toUnsignedInt(type));
 
-        String param_type = type == 0 ? "URL"
-                : type == 1 ? "Body" : type == 2 ? "Cookie" : type == 3 ? "XML" : type == 4 ? "Body" : // XML_ATTR
-                        type == 5 ? "Body" : // MULTIPART
-                                type == 6 ? "Body" : "Body";// JSON
         String iterateString = "";
 
         String _getParametorName = "";
@@ -319,7 +317,7 @@ public class RequestResponseUtils {
                 try {
                     _getParametorName = Decoder.decode(parametor.getName(), this.decodeSet);
                     _getParametorValue = Decoder.decode(parametor.getValue(), this.decodeSet);
-                    iterateString += param_type + "\t" + _getParametorName + "\t" + _getParametorValue + "\n";
+                    iterateString += paramType + "\t" + _getParametorName + "\t" + _getParametorValue + "\n";
                 } catch (Exception e) {
                 }
             }

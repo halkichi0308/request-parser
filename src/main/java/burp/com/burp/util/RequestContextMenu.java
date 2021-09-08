@@ -16,9 +16,6 @@ import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Date;
 
-
-
-
 public class RequestContextMenu implements MouseListener {
 
     private IBurpExtenderCallbacks iBurpExtenderCallbacks;
@@ -27,7 +24,8 @@ public class RequestContextMenu implements MouseListener {
     private ExtentionTab extentionTab;
     public ITab iTab;
 
-    public RequestContextMenu(IBurpExtenderCallbacks callbacks, IHttpRequestResponse[] requestResponseArray, ExtentionTab extentionTab) {  
+    public RequestContextMenu(IBurpExtenderCallbacks callbacks, IHttpRequestResponse[] requestResponseArray,
+            ExtentionTab extentionTab) {
         this.iBurpExtenderCallbacks = callbacks;
         this.iHttpRequestResponseArray = requestResponseArray;
         this.requestResponseUtils = new RequestResponseUtils(callbacks);
@@ -36,39 +34,38 @@ public class RequestContextMenu implements MouseListener {
 
     /**
      * Call events, mouseReleased on ContextMenu.
-     * @param event 
+     * 
+     * @param event
      */
     @Override
     public void mouseReleased(MouseEvent event) {
-        
+
         PrintWriter stdout = new PrintWriter(iBurpExtenderCallbacks.getStdout(), true);
         PrintWriter stderr = new PrintWriter(iBurpExtenderCallbacks.getStderr(), true);
         for (IHttpRequestResponse iHttpRequestResponse : this.iHttpRequestResponseArray) {
             RequestParser requestParser = null;
-            
+
             String memoFormatText = this.extentionTab.getFormatMemoTextArea();
             // [TODO] To declare argument "decodeset" is undesirable.
             byte decodeSet = this.extentionTab.decodeChecked();
-            
+
             Date date = new Date();
             Calendar calendar = Calendar.getInstance();
             calendar.set(2021, 8, 1);
             Date useLimitDate = calendar.getTime();
 
-            if(date.before(useLimitDate)){
+            if (date.before(useLimitDate)) {
                 stdout.println("[Notice]: You should update. Let Producer know this.\n");
                 Pbcopy.pbcopy("[Notice]: You should update. Let Producer know this.\n");
             }
 
-            try{       
-                requestParser = new RequestParser(  iHttpRequestResponse,
-                                                    requestResponseUtils,
-                                                    memoFormatText,
-                                                    decodeSet ); 
+            try {
+                requestParser = new RequestParser(iHttpRequestResponse, requestResponseUtils, memoFormatText,
+                        decodeSet);
 
                 stdout.println("[Success]: Parsed 1 request, then pasted to Clipboard.\n");
-                Pbcopy.pbcopy(requestParser.getParsedRequest());                
-            }catch(Exception e){
+                Pbcopy.pbcopy(requestParser.getParsedRequest());
+            } catch (Exception e) {
                 stdout.println("[Error]: Unexpected Request.\n");
                 stderr.println(e);
                 Pbcopy.pbcopy(requestParser.getParsedRequest());
@@ -77,14 +74,18 @@ public class RequestContextMenu implements MouseListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {}
+    public void mouseClicked(MouseEvent e) {
+    }
 
     @Override
-    public void mousePressed(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+    }
 
     @Override
-    public void mouseEntered(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {
+    }
 
     @Override
-    public void mouseExited(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {
+    }
 }
