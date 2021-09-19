@@ -16,12 +16,16 @@ public class MemoFormatter {
     this.single_memorandom = memorandom_format.replace("§§raw_req§§", req_extracted_map.get("raw_req"));
   }
 
-  public void appendReferer(String url) {
-    this.single_memorandom = this.single_memorandom.replace("§§referred_from§§", url);
+  public void appendUrl(String target) {
+    this.single_memorandom = this.single_memorandom.replace("§§target§§", target);
   }
 
-  public void appendUrl(String target) {
-    this.single_memorandom = this.single_memorandom.replace("§§pentest_target§§", target);
+  public void appendReferer(String url) {
+    this.single_memorandom = this.single_memorandom.replace("§§referer§§", url);
+  }
+
+  public void appendRefererOrigin(String url) {
+    this.single_memorandom = this.single_memorandom.replace("§§referer_origin§§", url);
   }
 
   public void appendMethod(String method) {
@@ -40,8 +44,18 @@ public class MemoFormatter {
     this.single_memorandom = this.single_memorandom.replace("§§cookies§§", cookies);
   }
 
+  public void appendParamsCountWithoutCookie(int paramsCount) {
+    this.single_memorandom = this.single_memorandom.replace("§§params_count_!cookie§§", paramsCount + "");
+  }
+
   public void appendParamsCount(int paramsCount) {
     this.single_memorandom = this.single_memorandom.replace("§§params_count§§", paramsCount + "");
   }
 
+  // from Response
+  public void appendStatusCode(Short statusCode) {
+    String statusCodeStr;
+    statusCodeStr = statusCode != 0 ? statusCodeStr = String.valueOf(statusCode) : "None";
+    this.single_memorandom = this.single_memorandom.replace("§§res_status§§", statusCodeStr + "");
+  }
 }
