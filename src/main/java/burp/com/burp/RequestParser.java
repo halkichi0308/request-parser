@@ -28,11 +28,11 @@ public class RequestParser {
     String cookies = requestResponseUtils.getCookieString(iHttpRequestResponse);
     String queries = requestResponseUtils.getQueryString(iHttpRequestResponse);
     String bodies = requestResponseUtils.getBodyString(iHttpRequestResponse);
-    int params_count = requestResponseUtils.countParams(iHttpRequestResponse);
+    int countParametorWithoutCookie = requestResponseUtils.countParamsWithoutCookie(iHttpRequestResponse);
+    int countParametor = requestResponseUtils.countParams(iHttpRequestResponse);
 
     // Response
     Short statusCode = requestResponseUtils.getStatusCode(iHttpRequestResponse);
-
     memoFormatter = new MemoFormatter(requestString, memoFormatText);
     memoFormatter.appendReferer(referer);
     memoFormatter.appendRefererOrigin(refererOrigin);
@@ -41,7 +41,8 @@ public class RequestParser {
     memoFormatter.appendCookies(cookies);
     memoFormatter.appendQueries(queries);
     memoFormatter.appendBodies(bodies);
-    memoFormatter.appendParamsCount(params_count);
+    memoFormatter.appendParamsCountWithoutCookie(countParametorWithoutCookie);
+    memoFormatter.appendParamsCount(countParametor);
     memoFormatter.appendStatusCode(statusCode);
 
     this.parsedRequestString = memoFormatter.single_memorandom;

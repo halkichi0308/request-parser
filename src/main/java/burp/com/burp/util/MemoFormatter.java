@@ -44,13 +44,18 @@ public class MemoFormatter {
     this.single_memorandom = this.single_memorandom.replace("§§cookies§§", cookies);
   }
 
+  public void appendParamsCountWithoutCookie(int paramsCount) {
+    this.single_memorandom = this.single_memorandom.replace("§§params_count_!cookie§§", paramsCount + "");
+  }
+
   public void appendParamsCount(int paramsCount) {
     this.single_memorandom = this.single_memorandom.replace("§§params_count§§", paramsCount + "");
   }
 
   // from Response
   public void appendStatusCode(Short statusCode) {
-    this.single_memorandom = this.single_memorandom.replace("§§res_status§§", String.valueOf(statusCode) + "");
+    String statusCodeStr;
+    statusCodeStr = statusCode != 0 ? statusCodeStr = String.valueOf(statusCode) : "None";
+    this.single_memorandom = this.single_memorandom.replace("§§res_status§§", statusCodeStr + "");
   }
-
 }

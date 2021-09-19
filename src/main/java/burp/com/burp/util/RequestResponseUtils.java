@@ -18,6 +18,7 @@ import burp.com.burp.util.RegexParser;
 import burp.com.burp.type.ParamType;
 import burp.com.org.apache.commons.codec.DecoderException;
 import java.io.PrintWriter;
+import burp.IBurpExtenderCallbacks;
 
 public class RequestResponseUtils {
 
@@ -89,10 +90,13 @@ public class RequestResponseUtils {
      * @return Short
      */
     public Short getStatusCode(IHttpRequestResponse iHttpRequestResponse) {
+        Short statusCode = 0;
+        try {
+            IResponseInfo iResponseInfo = iExtensionHelpers.analyzeResponse(iHttpRequestResponse.getResponse());
+            statusCode = iResponseInfo.getStatusCode();
+        } catch (Exception e) {
 
-        IResponseInfo iResponseInfo = iExtensionHelpers.analyzeResponse(iHttpRequestResponse.getResponse());
-        Short statusCode = iResponseInfo.getStatusCode();
-
+        }
         return statusCode;
     }
 
@@ -214,9 +218,6 @@ public class RequestResponseUtils {
         return iRequestInfo.getContentType();
     }
 
-    /**
-     * Count paramator exclude cookie from all paramators.
-     */
     public int countParams(IHttpRequestResponse iHttpRequestResponse) {
         int rtnCountParams = 0;
         IRequestInfo iRequestInfo = iExtensionHelpers.analyzeRequest(iHttpRequestResponse);
@@ -225,6 +226,22 @@ public class RequestResponseUtils {
             if (parametor.getType() != 2 /* Cookie */) {
                 rtnCountParams++;
             }
+        }
+        return rtnCountParams;
+    }
+
+    /**
+     * Count paramator exclude cookie from all paramators.
+     */
+    public int countParamsWithoutCookie(IHttpRequestResponse iHttpRequestResponse) {
+        int rtnCountParams = 0;
+        PrintWriter stdout = new PrintWriter(iBurpExtenderCallbacks.getStdout(), true);
+        stdout.println("Wrote1\n");
+
+        IRequestInfo iRequestInfo = iExtensionHelpers.analyzeRequest(iHttpRequestResponse);
+        List<IParameter> parametors = iRequestInfo.getParameters();
+        for (IParameter parametor : parametors) {
+            rtnCountParams++;
         }
         return rtnCountParams;
     }
@@ -307,7 +324,6 @@ public class RequestResponseUtils {
         final ParamType paramType = ParamType.typeOf(Byte.toUnsignedInt(type));
 
         String iterateString = "";
-
         String _getParametorName = "";
         String _getParametorValue = "";
 

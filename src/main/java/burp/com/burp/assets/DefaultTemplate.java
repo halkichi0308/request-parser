@@ -10,8 +10,9 @@ public class DefaultTemplate {
     private static String memorandom_format = "[Format]\n" + "[Target URL]: " + "\n" + "§§target§§" + "\n\n"
             + "[Referer]: " + "\n" + "§§referer_origin§§" + "\n\n" + "[Method]: " + "\n" + "§§method§§" + "\n\n"
             + "[Cookie]: " + "\n" + "§§cookies§§" + "\n\n" + "[GET Parametor]: " + "\n" + "§§get_params§§" + "\n\n"
-            + "[POST Parametor]: " + "\n" + "§§body_params§§" + "\n\n" + "[Total Parametor(without Cookies)]: " + "\n"
-            + "§§params_count§§";
+            + "[POST Parametor]: " + "\n" + "§§body_params§§" + "\n\n" + "[Count total Parametor]: " + "\n"
+            + "§§params_count§§" + "\n\n" + "[Count total Parametor(without Cookies)]: " + "\n"
+            + "§§params_count_!cookie§§";;
 
     /**
      * Burp will load 'template.txt', if the file is exist in same directory.
