@@ -7,6 +7,8 @@ import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout.ParallelGroup;
 
+import burp.IBurpExtenderCallbacks;
+
 public class ExtentionTab extends JPanel {
 
         static final String EXTENTION_NAME = "<html><h2 style='margin:0;padding:0;color:#FF4500'>Request Parser</h2></html>";
@@ -59,6 +61,9 @@ public class ExtentionTab extends JPanel {
                 buttonGroup1.add(radioBtn_SJIS);
                 buttonGroup1.add(radioBtn_EUC);
                 buttonGroup1.add(radioBtn_RAW);
+                // Burp Suit Professional 2022.3.1 or newer is not supporting HTML tag.
+                headerPanel.putClientProperty("html.disable", Boolean.FALSE);
+                infoLabel.putClientProperty("html.disable", Boolean.FALSE);
 
                 jSeparator1 = new JSeparator();
 
