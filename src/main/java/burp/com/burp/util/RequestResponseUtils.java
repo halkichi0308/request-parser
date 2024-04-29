@@ -159,6 +159,17 @@ public class RequestResponseUtils {
     }
 
     public String getUrl(IHttpRequestResponse iHttpRequestResponse) {
+
+        // リクエスト情報を取得
+        IRequestInfo iRequestInfo = iExtensionHelpers.analyzeRequest(iHttpRequestResponse);
+
+        // リクエストヘッダ情報を取得
+        URL url = iRequestInfo.getUrl();
+        String port = ":" + String.valueOf(url.getPort());
+        return url.toString().replace(port, "");
+    }
+
+    public String getRequestOrigin(IHttpRequestResponse iHttpRequestResponse) {
         StringBuilder stringBuilder = new StringBuilder();
 
         // リクエスト情報を取得
