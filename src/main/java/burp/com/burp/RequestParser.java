@@ -23,6 +23,7 @@ public class RequestParser {
     String requestString = requestResponseUtils.showRequest(iHttpRequestResponse);
     String method = requestResponseUtils.getMethod(iHttpRequestResponse);
     String url = requestResponseUtils.getUrl(iHttpRequestResponse);
+    String request_origin = requestResponseUtils.getRequestOrigin(iHttpRequestResponse);
     String referer = requestResponseUtils.getReferer(iHttpRequestResponse);
     String refererOrigin = requestResponseUtils.getRefererOrigin(iHttpRequestResponse);
     String cookies = requestResponseUtils.getCookieString(iHttpRequestResponse);
@@ -37,6 +38,7 @@ public class RequestParser {
     memoFormatter.appendReferer(referer);
     memoFormatter.appendRefererOrigin(refererOrigin);
     memoFormatter.appendUrl(url);
+    memoFormatter.appendRequestOrigin(request_origin);
     memoFormatter.appendMethod(method);
     memoFormatter.appendCookies(cookies);
     memoFormatter.appendQueries(queries);

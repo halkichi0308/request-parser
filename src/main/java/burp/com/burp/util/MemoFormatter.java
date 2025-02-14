@@ -16,8 +16,12 @@ public class MemoFormatter {
     this.single_memorandom = memorandom_format.replace("§§raw_req§§", req_extracted_map.get("raw_req"));
   }
 
+  public void appendRequestOrigin(String target) {
+    this.single_memorandom = this.single_memorandom.replace("§§url_origin§§", target);
+  }
+
   public void appendUrl(String target) {
-    this.single_memorandom = this.single_memorandom.replace("§§target§§", target);
+    this.single_memorandom = this.single_memorandom.replace("§§url§§", target);
   }
 
   public void appendReferer(String url) {
