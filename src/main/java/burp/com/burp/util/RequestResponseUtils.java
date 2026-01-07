@@ -15,9 +15,6 @@ import java.util.List;
 
 import burp.com.burp.type.ParamType;
 import burp.com.org.apache.commons.codec.DecoderException;
-import java.io.PrintWriter;
-import burp.IBurpExtenderCallbacks;
-
 
 public class RequestResponseUtils {
 
@@ -220,14 +217,12 @@ public class RequestResponseUtils {
         return iRequestInfo.getContentType();
     }
 
-    public int countParams(IHttpRequestResponse iHttpRequestResponse) {
+        public int countParams(IHttpRequestResponse iHttpRequestResponse) {
         int rtnCountParams = 0;
         IRequestInfo iRequestInfo = iExtensionHelpers.analyzeRequest(iHttpRequestResponse);
         List<IParameter> parametors = iRequestInfo.getParameters();
         for (IParameter parametor : parametors) {
-            if (parametor.getType() != 2 /* Cookie */) {
-                rtnCountParams++;
-            }
+            rtnCountParams++;
         }
         return rtnCountParams;
     }
@@ -237,11 +232,12 @@ public class RequestResponseUtils {
      */
     public int countParamsWithoutCookie(IHttpRequestResponse iHttpRequestResponse) {
         int rtnCountParams = 0;
-
         IRequestInfo iRequestInfo = iExtensionHelpers.analyzeRequest(iHttpRequestResponse);
         List<IParameter> parametors = iRequestInfo.getParameters();
         for (IParameter parametor : parametors) {
-            rtnCountParams++;
+            if (parametor.getType() != 2 /* Cookie */) {
+                rtnCountParams++;
+            }
         }
         return rtnCountParams;
     }
