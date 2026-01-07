@@ -6,19 +6,15 @@ import burp.IHttpRequestResponse;
 import burp.IRequestInfo;
 import burp.IResponseInfo;
 import burp.IParameter;
+import burp.IHttpService;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import org.json.JSONObject;
 
-import burp.com.burp.util.Decoder;
-import burp.com.burp.util.RegexParser;
 import burp.com.burp.type.ParamType;
 import burp.com.org.apache.commons.codec.DecoderException;
-import java.io.PrintWriter;
-import burp.IBurpExtenderCallbacks;
 
 public class RequestResponseUtils {
 
@@ -57,29 +53,6 @@ public class RequestResponseUtils {
         // リクエストボディ情報を取得
         byte[] requestBytes = iHttpRequestResponse.getRequest();
         stringBuilder.append(this.createBodyRaw(requestBytes));
-
-        return stringBuilder.toString();
-    }
-
-    /**
-     * レスポンス情報を取得
-     *
-     * @param iHttpRequestResponse
-     * @return String
-     */
-    public String showResponse(IHttpRequestResponse iHttpRequestResponse) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        // レスポンス情報を取得
-        IResponseInfo iResponseInfo = iExtensionHelpers.analyzeResponse(iHttpRequestResponse.getResponse());
-
-        // レスポンスヘッダ情報を取得
-        List<String> headers = iResponseInfo.getHeaders();
-        stringBuilder.append(this.createHeaderRaw(headers));
-
-        // レスポンスボディ情報を取得
-        byte[] responseBytes = iHttpRequestResponse.getResponse();
-        stringBuilder.append(this.createBodyRaw(responseBytes));
 
         return stringBuilder.toString();
     }
@@ -158,14 +131,29 @@ public class RequestResponseUtils {
         return stringBuilder.toString();
     }
 
+    public String getHostHeader(List<String> headers){
+        for (String header : headers) {
+            if (header.toLowerCase().startsWith("host:")) {
+                return header.substring(5).trim(); // "Host:" の5文字を除去
+            }
+        }
+        return null;
+    }
+
     public String getUrl(IHttpRequestResponse iHttpRequestResponse) {
 
         // リクエスト情報を取得
         IRequestInfo iRequestInfo = iExtensionHelpers.analyzeRequest(iHttpRequestResponse);
 
-        // リクエストヘッダ情報を取得
+        // HTTPリクエストはBurpのHelper解析の戻り値のため、EditorのUIと一致しない。
         URL url = iRequestInfo.getUrl();
-        String port = ":" + String.valueOf(url.getPort());
+        IHttpService iHttpService = iHttpRequestResponse.getHttpService();
+        String port = ":" + String.valueOf(iHttpService.getPort());
+
+        // EditorUIに表示されているHostヘッダに:3000のようなポートが含まれている場合の処理
+        if(getHostHeader(iRequestInfo.getHeaders()).contains(":")){
+            port = "";
+        }
         return url.toString().replace(port, "");
     }
 
@@ -229,14 +217,12 @@ public class RequestResponseUtils {
         return iRequestInfo.getContentType();
     }
 
-    public int countParams(IHttpRequestResponse iHttpRequestResponse) {
+        public int countParams(IHttpRequestResponse iHttpRequestResponse) {
         int rtnCountParams = 0;
         IRequestInfo iRequestInfo = iExtensionHelpers.analyzeRequest(iHttpRequestResponse);
         List<IParameter> parametors = iRequestInfo.getParameters();
         for (IParameter parametor : parametors) {
-            if (parametor.getType() != 2 /* Cookie */) {
-                rtnCountParams++;
-            }
+            rtnCountParams++;
         }
         return rtnCountParams;
     }
@@ -246,13 +232,12 @@ public class RequestResponseUtils {
      */
     public int countParamsWithoutCookie(IHttpRequestResponse iHttpRequestResponse) {
         int rtnCountParams = 0;
-        PrintWriter stdout = new PrintWriter(iBurpExtenderCallbacks.getStdout(), true);
-        stdout.println("Wrote1\n");
-
         IRequestInfo iRequestInfo = iExtensionHelpers.analyzeRequest(iHttpRequestResponse);
         List<IParameter> parametors = iRequestInfo.getParameters();
         for (IParameter parametor : parametors) {
-            rtnCountParams++;
+            if (parametor.getType() != 2 /* Cookie */) {
+                rtnCountParams++;
+            }
         }
         return rtnCountParams;
     }
