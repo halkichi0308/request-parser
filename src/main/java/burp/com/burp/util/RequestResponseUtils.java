@@ -11,14 +11,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import org.json.JSONObject;
 
-import burp.com.burp.util.Decoder;
-import burp.com.burp.util.RegexParser;
 import burp.com.burp.type.ParamType;
 import burp.com.org.apache.commons.codec.DecoderException;
 import java.io.PrintWriter;
 import burp.IBurpExtenderCallbacks;
+
 
 public class RequestResponseUtils {
 
@@ -57,29 +55,6 @@ public class RequestResponseUtils {
         // リクエストボディ情報を取得
         byte[] requestBytes = iHttpRequestResponse.getRequest();
         stringBuilder.append(this.createBodyRaw(requestBytes));
-
-        return stringBuilder.toString();
-    }
-
-    /**
-     * レスポンス情報を取得
-     *
-     * @param iHttpRequestResponse
-     * @return String
-     */
-    public String showResponse(IHttpRequestResponse iHttpRequestResponse) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        // レスポンス情報を取得
-        IResponseInfo iResponseInfo = iExtensionHelpers.analyzeResponse(iHttpRequestResponse.getResponse());
-
-        // レスポンスヘッダ情報を取得
-        List<String> headers = iResponseInfo.getHeaders();
-        stringBuilder.append(this.createHeaderRaw(headers));
-
-        // レスポンスボディ情報を取得
-        byte[] responseBytes = iHttpRequestResponse.getResponse();
-        stringBuilder.append(this.createBodyRaw(responseBytes));
 
         return stringBuilder.toString();
     }
@@ -246,8 +221,6 @@ public class RequestResponseUtils {
      */
     public int countParamsWithoutCookie(IHttpRequestResponse iHttpRequestResponse) {
         int rtnCountParams = 0;
-        PrintWriter stdout = new PrintWriter(iBurpExtenderCallbacks.getStdout(), true);
-        stdout.println("Wrote1\n");
 
         IRequestInfo iRequestInfo = iExtensionHelpers.analyzeRequest(iHttpRequestResponse);
         List<IParameter> parametors = iRequestInfo.getParameters();
