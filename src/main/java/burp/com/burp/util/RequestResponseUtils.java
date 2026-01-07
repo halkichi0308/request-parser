@@ -6,6 +6,7 @@ import burp.IHttpRequestResponse;
 import burp.IRequestInfo;
 import burp.IResponseInfo;
 import burp.IParameter;
+import burp.IHttpService;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -133,14 +134,29 @@ public class RequestResponseUtils {
         return stringBuilder.toString();
     }
 
+    public String getHostHeader(List<String> headers){
+        for (String header : headers) {
+            if (header.toLowerCase().startsWith("host:")) {
+                return header.substring(5).trim(); // "Host:" の5文字を除去
+            }
+        }
+        return null;
+    }
+
     public String getUrl(IHttpRequestResponse iHttpRequestResponse) {
 
         // リクエスト情報を取得
         IRequestInfo iRequestInfo = iExtensionHelpers.analyzeRequest(iHttpRequestResponse);
 
-        // リクエストヘッダ情報を取得
+        // HTTPリクエストはBurpのHelper解析の戻り値のため、EditorのUIと一致しない。
         URL url = iRequestInfo.getUrl();
-        String port = ":" + String.valueOf(url.getPort());
+        IHttpService iHttpService = iHttpRequestResponse.getHttpService();
+        String port = ":" + String.valueOf(iHttpService.getPort());
+
+        // EditorUIに表示されているHostヘッダに:3000のようなポートが含まれている場合の処理
+        if(getHostHeader(iRequestInfo.getHeaders()).contains(":")){
+            port = "";
+        }
         return url.toString().replace(port, "");
     }
 
